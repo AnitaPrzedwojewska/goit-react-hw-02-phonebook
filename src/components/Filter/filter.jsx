@@ -1,9 +1,10 @@
-import { Component } from "react";
-import { nanoid } from "nanoid";
+import { Component } from 'react';
+import { nanoid } from 'nanoid';
 
-export class Search extends Component {
-  constructor() {
-    super()
+export class Filter extends Component {
+  constructor(props) {
+    super(props);
+
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -23,8 +24,9 @@ export class Search extends Component {
           name="filter"
           id={this.searchInputId}
           value={filter}
-          onChange={this.handleChange}></input>
+          onChange={this.handleChange}
+        ></input>
       </>
     );
   }
-};
+}
