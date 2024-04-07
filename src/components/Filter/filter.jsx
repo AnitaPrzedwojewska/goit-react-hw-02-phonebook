@@ -9,7 +9,7 @@ export class Filter extends Component {
   }
 
   handleChange(event) {
-    this.props.onSearchChange(event);
+    this.props.onFilterChange(event);
   }
 
   searchInputId = nanoid();

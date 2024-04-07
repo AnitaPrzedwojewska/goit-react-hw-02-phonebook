@@ -1,14 +1,15 @@
-export const ContactList = ({ contacts, filter }) => {
+export const ContactList = ({ contacts, filter, onFilterChange, onDeleteContact }) => {
+  const filteredContacts = onFilterChange();
   return (
     <ul>
-      {contacts.map(contact => (
-          <li key={contact.id}>
-            {contact.name}, {contact.number}
-          <button type="button"
-            name={contact.id}
-            // onClick={deleteContact}
-          >Delete</button>
-          </li>))}
+      {filteredContacts.map(contact => (
+        <li key={contact.id}>
+          {contact.name}, {contact.number}
+          <button type="button" name={contact.id} onClick={onDeleteContact}>
+            Delete
+          </button>
+        </li>
+      ))}
     </ul>
   );
 };

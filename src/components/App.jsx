@@ -21,16 +21,18 @@ export class App extends Component {
       filter: ''
     };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleAddContact = this.handleAddContact.bind(this);
+    this.changeFilter = this.changeFilter.bind(this);
+    this.addContact = this.addContact.bind(this);
+    this.filterContacts = this.filterContacts.bind(this);
+    this.deleteContact = this.deleteContact.bind(this);
   }
 
-  handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
+  changeFilter = event => {
+    const { value } = event.target;
+    this.setState({ filter: value });
   };
 
-  handleAddContact = event => {
+  addContact = event => {
     event.preventDefault();
     const { contacts } = this.state;
     const name = event.target.name.value;
@@ -38,7 +40,6 @@ export class App extends Component {
     const existContact = contacts.find(contact => contact.name === name);
 
     if (existContact) {
-      console.log('Contact to ', name, ' is already in contacts!');
       alert(`${name} is already in contacts!`);
       return;
     }
@@ -47,35 +48,36 @@ export class App extends Component {
     event.target.reset();
   };
 
+  filterContacts = () => {
+    const { contacts, filter } = this.state;
+    const results = filter.trim() === ''
+      ? contacts
+      : contacts.filter(({ name }) =>
+        name.toLowerCase().includes(filter.toLowerCase)
+      );
+    // console.log('results: ', results);
+    return results
+  }
+
   deleteContact = event => {
-    const { id } = event.target.name;
     const { contacts } = this.state;
-    const newContacts = contacts.splice(contacts.indexOf(id), 1);
-    console.log('newContacts: ', newContacts);
+    this.setState({
+      contacts: contacts.filter(contact => contact.id !== event.target.name),
+    });
   };
 
   render() {
-    const { filter, contacts } = this.state;
-    console.log('filter: ', filter)
-    console.log('contacts: ', contacts);
-    // let filteredContacts = contacts.filter(contact => contact.name.toLower().includes(filter.toLower));
-    // console.log('filteredContacts: ', filteredContacts);
     return (
       <Wrapper>
         <h1>Phonebook</h1>
-        <ContactForm
-          onFormSubmit={this.handleAddContact}
-        />
+        <ContactForm onFormSubmit={this.addContact} />
         <h2>Contacts</h2>
-        <Filter
-          filter={this.state.filter}
-          onSearchChange={this.handleFormChange}
-          // onSearchChange={this.handleSearchChange}
-        />
+        <Filter filter={this.state.filter} onFilterChange={this.changeFilter} />
         <ContactList
-          // contacts={filteredContacts}
           contacts={this.state.contacts}
           filter={this.state.filter}
+          onFilterChange={this.filterContacts}
+          onDeleteContact={this.deleteContact}
         />
       </Wrapper>
     );
