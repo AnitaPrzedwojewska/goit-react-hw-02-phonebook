@@ -45,18 +45,13 @@ export class App extends Component {
     }
     const newContact = { name: name, number: number, id: nanoid() };
     this.setState({ contacts: [...contacts, newContact] });
-    event.target.reset();
   };
 
   filterContacts = () => {
     const { contacts, filter } = this.state;
-    const results = filter.trim() === ''
-      ? contacts
-      : contacts.filter(({ name }) =>
-        name.toLowerCase().includes(filter.toLowerCase)
+    return (filter.trim() === '') ? contacts : contacts.filter(contact =>
+        contact.name.toLowerCase().includes(filter.toLowerCase())
       );
-    // console.log('results: ', results);
-    return results
   }
 
   deleteContact = event => {

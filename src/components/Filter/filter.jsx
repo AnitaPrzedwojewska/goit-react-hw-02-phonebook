@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
+import { InputStyled } from './filter.styled';
+import PropTypes from 'prop-types';
 
 export class Filter extends Component {
   constructor(props) {
@@ -19,14 +21,18 @@ export class Filter extends Component {
     return (
       <>
         <p>Find contacts by name:</p>
-        <input
+        <InputStyled
           type="input"
           name="filter"
           id={this.searchInputId}
           value={filter}
           onChange={this.handleChange}
-        ></input>
+        ></InputStyled>
       </>
     );
   }
 }
+
+Filter.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+};

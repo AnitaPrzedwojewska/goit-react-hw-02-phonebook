@@ -1,13 +1,14 @@
 import { nanoid } from 'nanoid';
-import { FormStyled, FormPair, LabelStyled } from './contactForm.styled';
+import { FormStyled, FormPair, LabelStyled, InputStyled, ButtonStyled } from './contactForm.styled';
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export class ContactForm extends Component {
   constructor() {
     super();
 
-    this.changeInput = this.changeInput.bind(this);
-    this.submitForm = this.submitForm.bind(this);
+    // this.changeInput = this.changeInput.bind(this);
+    // this.submitForm = this.submitForm.bind(this);
 
     this.state = {
       name: '',
@@ -15,13 +16,16 @@ export class ContactForm extends Component {
     }
   }
 
-  changeInput = event => {
+  changeInput = (event) => {
       const { name, value } = event.target;
       this.setState({ [name] : value });
     };
 
   submitForm = (event) => {
     this.props.onFormSubmit(event);
+    // const { name, number } = event.target;
+    this.setState({ name: '' });
+    this.setState({ number: '' });
   }
 
   render() {
@@ -31,8 +35,8 @@ export class ContactForm extends Component {
     return (
       <FormStyled onSubmit={this.submitForm}>
         <FormPair>
-          <LabelStyled htmlFor={nameInputId}>Name</LabelStyled>
-          <input
+          <LabelStyled htmlFor={nameInputId}>Name:</LabelStyled>
+          <InputStyled
             type="text"
             name="name"
             id={nameInputId}
@@ -45,8 +49,8 @@ export class ContactForm extends Component {
           />
         </FormPair>
         <FormPair>
-          <LabelStyled htmlFor={numberInputId}>Number</LabelStyled>
-          <input
+          <LabelStyled htmlFor={numberInputId}>Number:</LabelStyled>
+          <InputStyled
             type="tel"
             name="number"
             id={numberInputId}
@@ -58,11 +62,18 @@ export class ContactForm extends Component {
             required
           />
         </FormPair>
-        <button type="submit">Add contact</button>
+        <ButtonStyled type="submit">Add contact</ButtonStyled>
       </FormStyled>
     );
   };
 }
+
+ContactForm.propTypes = {
+  name: PropTypes.string,
+  number: PropTypes.string,
+  changeInput: PropTypes.func.isRequired,
+  submitForm: PropTypes.func.isRequired
+};
 
 // export const ContactForm = ({ onFormSubmit }) => {
 //   const nameInputId = nanoid();
