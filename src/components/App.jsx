@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { nanoid } from 'nanoid';
 import { Wrapper } from './app.styled';
 import { ContactForm } from './ContactForm/contactForm';
 import { Filter } from './Filter/filter';
 import { ContactList } from './ContactList/contactList';
-// import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export class App extends Component {
@@ -32,18 +30,14 @@ export class App extends Component {
     this.setState({ filter: value });
   };
 
-  addContact = event => {
-    event.preventDefault();
+  addContact = (newContact) => {
     const { contacts } = this.state;
-    const name = event.target.name.value;
-    const number = event.target.number.value;
-    const existContact = contacts.find(contact => contact.name === name);
+    const existContact = contacts.find(contact => contact.name === newContact.name);
 
     if (existContact) {
-      alert(`${name} is already in contacts!`);
+      alert(`${newContact.name} is already in contacts!`);
       return;
     }
-    const newContact = { name: name, number: number, id: nanoid() };
     this.setState({ contacts: [...contacts, newContact] });
   };
 

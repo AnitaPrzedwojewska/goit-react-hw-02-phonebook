@@ -1,16 +1,15 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import { InputStyled } from './filter.styled';
-import PropTypes from 'prop-types';
 
 export class Filter extends Component {
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    this.handleChange = this.handleChange.bind(this);
-  }
+    // this.handleChange = this.handleChange.bind(this);
+  // }
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.props.onFilterChange(event);
   }
 
@@ -32,7 +31,3 @@ export class Filter extends Component {
     );
   }
 }
-
-Filter.propTypes = {
-  handleChange: PropTypes.func.isRequired,
-};
